@@ -6,12 +6,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     WifiManager wifi;
@@ -28,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d("WIFI1", "Receive Wifi");
+            List<ScanResult> list = wifi.getScanResults();
+            for (ScanResult sr : list)
+            {
+
+                Log.d("WIFI1", sr.SSID + "," + sr.level);
+            }
+
         }
     };
 
