@@ -1,11 +1,15 @@
 package com.example.teacher.db052002;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,6 +24,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    BroadcastReceiver receiverWifi = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("WIFI1", "Receive Wifi");
+        }
+    };
 
     public void clickScan(View v) {
         wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
@@ -40,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
             });
             dialog.show();
         }
+        registerReceiver(receiverWifi, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        wifi.startScan();
     }
 
 }
